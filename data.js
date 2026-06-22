@@ -69,13 +69,13 @@ window.NEXUS_DATA = {
     },
     {
       name: 'Reporting',
-      updatedAt: '2026-06-18T14:56:00',
+      updatedAt: '2026-06-22T13:28:00',
       bullets: [
-        'Architectural documentation in flight',
-        'Andrew picking up the sales & revenue module; Mack moving to budtender report implementation starting Monday',
-        'Weekly show-and-tells start next week — team needs something demo-ready',
-        "Marina: reviewing Mack's docs + completing sales breakdown; Matt Cossin: finishing budtender report widgets and queries; Mack Hatfield: exploring the customer reporting repo, implementation starting EOD/Monday; Andrew: syncing on the data model, beginning sales & revenue module work; Seth Newman: continuing the sales overview architecture doc (mirrors Mack's budtender performance doc)",
-        'Goal: full end-to-end Budtender Reporting slice (widget or table) ready for Friday\'s show-and-tell at 1:30 PM ET — Amanda and Gordy coordinating on front-end to prevent stalls; no blockers',
+        'Discount metrics (manual discount rate, average discount %) in flight; Matt and Casey pairing today to review PR and logic',
+        'Friday demo target: first two tabs demoable for the 1:30 PM ET show-and-tell',
+        'Fraud discovery kicking off — coordinating with Stacy & Co to validate fraud use cases and thresholds',
+        'Coordination needed with Signal Tower + Mack to avoid duplicating risk-related work on the budtender performance/risk modal',
+        'Watch: Snowflake stage DB is a demo risk — Don aligning with Luan on refresh scope',
       ],
     },
     {
