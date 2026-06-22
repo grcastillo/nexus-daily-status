@@ -53,13 +53,14 @@ window.NEXUS_DATA = {
     },
     {
       name: 'Command Center',
-      updatedAt: '2026-06-18T15:58:00',
+      updatedAt: '2026-06-22T14:00:00',
       paused: true,
-      pausedReason: 'On hold — picked back up once Reporting, Inventory Planning, and Signal Tower are complete.',
+      pausedReason: 'On hold pending Reporting, Inventory Planning, and Signal Tower completion — small UI updates possible based on executive and customer feedback.',
       bullets: [
         'Roll-up surface — aggregates data from the other pages, so it resumes once Reporting, Inventory Planning, and Signal Tower are complete',
-        'Resource shuffle: Mike Luon → Reports; Stephen Morton → Inventory Insights; Rex → Inventory Planning (back-end)',
+        'Resource shuffle: Mike Luon → Reports; Steven Morton → Inventory Insights; Rex → Inventory Planning (back-end)',
         'Scott on Register Copilot',
+        'Small UI updates may happen in the interim based on executive and customer feedback',
       ],
     },
     {
