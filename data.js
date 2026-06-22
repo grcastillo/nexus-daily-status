@@ -34,7 +34,7 @@ window.NEXUS_DATA = {
         'SKU Table/View, SKU Table UI (with mock API), and back-end contracts / API all progressing this week',
         'Evan: reusable table UI component complete; working on SKU Table UI. Stephen: PR open for SKU view/table. Matt Cossin: S3→SQL dependency scoped and handed off to Stephen',
         'Rex and Ned onboarding this week; Rex working with Evan + Stephen on back-end contracts. Roey on vacation; Mike OOO today and rotating off the team',
-        'Blocked: Snowflake → S3 → SQL Server pipeline not yet done — blocking final progress. A global concern, not just inventory. Escalated to Tim, Eric Livergood, Chris, and Tom',
+        'Partial-Blocked: Snowflake → S3 → SQL Server pipeline not yet done — blocking final progress on the data layer. A global concern, not just inventory. Escalated to Tim, Eric Livergood, Chris, and Tom',
       ],
     },
     {

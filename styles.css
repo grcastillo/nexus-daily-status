@@ -141,11 +141,12 @@ body {
   content: ''; width: 5px; height: 5px; border-radius: 50%;
   background: currentColor; flex-shrink: 0;
 }
-.status-chip.on-track { background: rgba(15,118,110,0.10);  color: #0f766e; }
-.status-chip.watch    { background: rgba(201,168,76,0.14);  color: #a8882c; }
-.status-chip.blocked  { background: rgba(176,74,94,0.10);   color: #b04a5e; }
-.status-chip.pending  { background: rgba(138,115,85,0.10);  color: #8a7355; }
-.status-chip.paused   { background: rgba(44,90,160,0.10);   color: #2c5aa0; }
+.status-chip.on-track        { background: rgba(15,118,110,0.10);  color: #0f766e; }
+.status-chip.watch           { background: rgba(201,168,76,0.14);  color: #a8882c; }
+.status-chip.partial-blocked { background: rgba(217,119,6,0.12);   color: #d97706; }
+.status-chip.blocked         { background: rgba(176,74,94,0.10);   color: #b04a5e; }
+.status-chip.pending         { background: rgba(138,115,85,0.10);  color: #8a7355; }
+.status-chip.paused          { background: rgba(44,90,160,0.10);   color: #2c5aa0; }
 
 /* ── PROGRAM BANNER ──
    Two columns: a compact health summary (left) beside the callout sections
@@ -180,11 +181,12 @@ body {
 .banner-health-dot {
   width: 7px; height: 7px; border-radius: 50%; flex: none;
 }
-.banner-health-dot.on-track { background: #4ade80; }
-.banner-health-dot.watch    { background: var(--gold); }
-.banner-health-dot.blocked  { background: #f87171; }
-.banner-health-dot.pending  { background: rgba(255,255,255,0.35); }
-.banner-health-dot.paused   { background: #6a8ec9; }
+.banner-health-dot.on-track        { background: #4ade80; }
+.banner-health-dot.watch           { background: var(--gold); }
+.banner-health-dot.partial-blocked { background: #f59e0b; }
+.banner-health-dot.blocked         { background: #f87171; }
+.banner-health-dot.pending         { background: rgba(255,255,255,0.35); }
+.banner-health-dot.paused          { background: #6a8ec9; }
 .banner-health-val { color: rgba(255,255,255,0.78); font-weight: 700; font-size: 14px; }
 .banner-updated {
   font-family: 'Inter', sans-serif;
@@ -207,6 +209,8 @@ body {
 .banner-risks-label.all-clear::before { background: #4ade80; }
 .banner-risks-label.blocked { color: #f87171; }
 .banner-risks-label.blocked::before { background: #f87171; }
+.banner-risks-label.partial-blocked { color: #d97706; }
+.banner-risks-label.partial-blocked::before { background: #f59e0b; }
 .banner-risks-label.paused { color: #6a8ec9; }
 .banner-risks-label.paused::before { background: #6a8ec9; }
 
@@ -232,8 +236,9 @@ body {
   background: rgba(201,168,76,0.14);
   padding: 1px 6px; border-radius: 3px;
 }
-.banner-risk-tag.blocked { color: #f87171; background: rgba(248,113,113,0.12); }
-.banner-risk-tag.paused  { color: #6a8ec9; background: rgba(106,142,201,0.15); }
+.banner-risk-tag.blocked          { color: #f87171; background: rgba(248,113,113,0.12); }
+.banner-risk-tag.partial-blocked  { color: #d97706; background: rgba(217,119,6,0.14); }
+.banner-risk-tag.paused           { color: #6a8ec9; background: rgba(106,142,201,0.15); }
 .banner-risk-text {
   font-size: 12px; color: rgba(255,255,255,0.42); line-height: 1.45;
   max-width: 860px;
@@ -263,6 +268,7 @@ details.team:last-child { border-bottom: none; }
 details.team.on-track           { border-left-color: var(--teal); }
 details.team.on-track.has-watch { border-left-color: var(--gold); } /* on track but being monitored */
 details.team.blocked            { border-left-color: var(--red);  }
+details.team.partial-blocked    { border-left-color: #d97706;     } /* partially blocked — orange */
 details.team.pending            { border-left-color: var(--t4);   } /* awaiting first update */
 details.team.paused             { border-left-color: #6a8ec9;     } /* on hold */
 

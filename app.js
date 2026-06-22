@@ -44,21 +44,20 @@
 
   function classifyBullet(text) {
     var t = text.trim();
-    if (/^blocked\s*:/i.test(t)) return 'blocked';
-    if (/^watch\s*:/i.test(t))   return 'watch';
+    if (/^blocked\s*:/i.test(t))         return 'blocked';
+    if (/^partial-blocked\s*:/i.test(t)) return 'partial-blocked';
+    if (/^watch\s*:/i.test(t))           return 'watch';
     if (BLOCKER_RE.test(t) && !/\bno\s+blockers?\b/i.test(t)) return 'watch';
     return 'on-track';
   }
 
-  // Overall health — 'paused' when explicitly on hold, 'pending' when no update
-  // yet, 'blocked' if explicitly blocked, otherwise 'on-track'. Watch items
-  // never demote status.
+  // Overall health — severity order: blocked > partial-blocked > on-track.
   function teamStatus(team) {
     if (team.paused) return 'paused';
     if (!team.bullets || !team.bullets.length) return 'pending';
-    return team.bullets.some(function (b) { return classifyBullet(b) === 'blocked'; })
-      ? 'blocked'
-      : 'on-track';
+    if (team.bullets.some(function (b) { return classifyBullet(b) === 'blocked'; })) return 'blocked';
+    if (team.bullets.some(function (b) { return classifyBullet(b) === 'partial-blocked'; })) return 'partial-blocked';
+    return 'on-track';
   }
 
   // Watch items are monitoring notes, separate from overall status.
@@ -77,7 +76,7 @@
     return null;
   }
 
-  function stripTag(text) { return text.replace(/^\s*(watch|blocked)\s*:\s*/i, '').trim(); }
+  function stripTag(text) { return text.replace(/^\s*(partial-blocked|watch|blocked)\s*:\s*/i, '').trim(); }
 
   function summaryLine(team) {
     var pos = team.bullets.filter(function (b) { return classifyBullet(b) === 'on-track'; });
@@ -89,7 +88,7 @@
     return pick.split(/;|\. (?=[A-Z])/)[0].trim();
   }
 
-  var STATUS_LABEL = { 'on-track': 'On track', blocked: 'Blocked', pending: 'No update yet', paused: 'On hold' };
+  var STATUS_LABEL = { 'on-track': 'On track', 'partial-blocked': 'Partially blocked', blocked: 'Blocked', pending: 'No update yet', paused: 'On hold' };
 
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -107,12 +106,12 @@
     var launch = parseDate(DATA.launchDate);
     var n      = daysBetween(d, launch);
 
-    var blockedTeams  = teams.filter(function (t) { return teamStatus(t) === 'blocked'; });
-    var pendingTeams  = teams.filter(function (t) { return teamStatus(t) === 'pending'; });
-    var pausedTeams   = teams.filter(function (t) { return teamStatus(t) === 'paused'; });
-    var watchingTeams = teams.filter(function (t) { return teamStatus(t) !== 'paused' && hasWatchItems(t); });
-    // on-track = has an update and isn't blocked/paused (watching teams ARE on track)
-    var onTrackCount  = teams.length - blockedTeams.length - pendingTeams.length - pausedTeams.length;
+    var blockedTeams        = teams.filter(function (t) { return teamStatus(t) === 'blocked'; });
+    var partialBlockedTeams = teams.filter(function (t) { return teamStatus(t) === 'partial-blocked'; });
+    var pendingTeams        = teams.filter(function (t) { return teamStatus(t) === 'pending'; });
+    var pausedTeams         = teams.filter(function (t) { return teamStatus(t) === 'paused'; });
+    var watchingTeams       = teams.filter(function (t) { return teamStatus(t) !== 'paused' && hasWatchItems(t); });
+    var onTrackCount        = teams.length - blockedTeams.length - partialBlockedTeams.length - pendingTeams.length - pausedTeams.length;
 
     // ── header: full date + countdown chip (always visible while scrolling) ──
     var dateEl = document.getElementById('header-date');
@@ -137,6 +136,13 @@
         '<div class="banner-health-row">' +
         '<span class="banner-health-dot blocked"></span>' +
         '<span class="banner-health-val">' + blockedTeams.length + '</span> blocked' +
+        '</div>';
+    }
+    if (partialBlockedTeams.length) {
+      healthRows +=
+        '<div class="banner-health-row">' +
+        '<span class="banner-health-dot partial-blocked"></span>' +
+        '<span class="banner-health-val">' + partialBlockedTeams.length + '</span> partially blocked' +
         '</div>';
     }
     if (watchingTeams.length) {
@@ -185,6 +191,25 @@
       }).join('');
       rightContent +=
         '<span class="banner-risks-label blocked">Action required</span>' + blockedRows;
+    }
+
+    if (partialBlockedTeams.length) {
+      if (rightContent) rightContent += '<div class="banner-section-divider"></div>';
+      var pbRows = partialBlockedTeams.map(function (t) {
+        var pb = null;
+        for (var i = 0; i < t.bullets.length; i++) {
+          if (classifyBullet(t.bullets[i]) === 'partial-blocked') { pb = t.bullets[i]; break; }
+        }
+        return (
+          '<div class="banner-risk-row">' +
+          '<div class="banner-risk-team">' + esc(t.name) +
+          ' <span class="banner-risk-tag partial-blocked">Partial block</span></div>' +
+          (pb ? '<div class="banner-risk-text">' + esc(stripTag(pb)) + '</div>' : '') +
+          '</div>'
+        );
+      }).join('');
+      rightContent +=
+        '<span class="banner-risks-label partial-blocked">Partially blocked</span>' + pbRows;
     }
 
     if (pausedTeams.length) {
