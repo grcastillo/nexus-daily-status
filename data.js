@@ -123,8 +123,9 @@ window.NEXUS_DATA = {
   // DRI sync. Rendered as its own section below the team list.
   driNotes: {
     title: 'DRI sync',
-    updatedAt: '2026-06-22T12:20:00',
+    updatedAt: '2026-06-22T14:00:00',
     decisions: [
+      'QA resourcing resolved: Ben assigned as primary QA owner (automated e2e coverage + manual e2e as pieces come online). Cnochez added as backup — Ben goes on parental leave end of July. Ben and Don will coordinate with QIE for any testing-infra needs.',
       'Dex Phase 1 capped at 5 use cases to protect time for auditing, usability, and invocation (not adding more cases).',
       'Non-Dex build pattern: Chris O. requested a standard for non-Dex teams to build Dex-consumable features (separating data/action/presentation layers). Campbell accepted as a Phase 1 task.',
       'Inventory: Eric Livergood migrating off due to workload — Rex rotating in as back-end. Ned meeting with team today to set weekly goals.',
