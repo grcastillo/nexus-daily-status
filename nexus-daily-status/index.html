@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus — Daily Summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark">N</div>
+    <div class="logo-text">Nexus</div>
+    <div class="logo-sep"></div>
+    <div class="logo-sub">Daily Summary</div>
+  </div>
+  <div class="header-right">
+    <span class="header-date" id="header-date"></span>
+    <span class="header-countdown" id="header-countdown"></span>
+  </div>
+</header>
+
+<nav class="nav">
+  <a href="#" class="nav-link active" data-tab="status">Status</a>
+  <a href="#" class="nav-link" data-tab="dri">DRI Notes</a>
+  <a href="#" class="nav-link" data-tab="roster">Teams</a>
+  <a href="https://nexus-1-75-prototype.dutchie-dev.workers.dev/" target="_blank" rel="noopener" class="nav-proto">View prototype ↗</a>
+</nav>
+
+<div class="page">
+
+  <!-- STATUS TAB -->
+  <div class="tab-panel active" id="tab-status">
+    <div id="day-lead"></div>
+    <div class="sec-label">All teams</div>
+    <div class="teams-list" id="teams-list"></div>
+  </div>
+
+  <!-- DRI NOTES TAB -->
+  <div class="tab-panel" id="tab-dri">
+    <div id="dri-notes"></div>
+  </div>
+
+  <!-- TEAMS TAB -->
+  <div class="tab-panel" id="tab-roster">
+    <div id="roster-content"></div>
+  </div>
+
+</div>
+
+<footer>
+  <span>Nexus Daily Summary</span>
+  <span>Renders from <code>data.js</code> · See <code>README.md</code> to post an update · Built with Bilda</span>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

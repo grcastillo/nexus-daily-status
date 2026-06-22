@@ -1,0 +1,495 @@
+/*
+ * Nexus Daily Summary — styles.
+ * Design tokens copied exactly from vape-pages.dutchie.dev/nexus-kickoff.
+ * Layout: program banner (dark) → team list → roster cards.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg:           #f0ebe2;
+  --card:         #ffffff;
+  --card-border:  #e8e3d8;
+  --card-shadow:  0 1px 4px rgba(0,0,0,0.06);
+  --sidebar:      #0c2318;
+  --sidebar-2:    #0f2a1d;
+  --gold:         #c9a84c;
+  --gold-mid:     #a8882c;
+  --gold-dim:     rgba(201,168,76,0.10);
+  --gold-border:  rgba(201,168,76,0.28);
+  --teal:         #0f766e;
+  --teal-dim:     rgba(15,118,110,0.08);
+  --teal-border:  rgba(15,118,110,0.22);
+  --red:          #b04a5e;
+  --red-dim:      rgba(176,74,94,0.08);
+  --red-border:   rgba(176,74,94,0.24);
+  --label-color:  #8a7355;
+  --t1:           #1a1510;
+  --t2:           #6b6357;
+  --t3:           #a89880;
+  --t4:           #d4cfc6;
+  --r:            12px;
+  --r-sm:         6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--t1);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  display: flex; flex-direction: column; min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--sidebar);
+  padding: 0 28px;
+  display: flex; align-items: stretch; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { display: flex; align-items: center; gap: 12px; padding: 18px 0; }
+.logo-mark {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px; font-weight: 900; color: var(--sidebar);
+  letter-spacing: -0.05em;
+}
+.logo-text { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+.logo-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.12); margin: 0 4px; }
+.logo-sub { font-size: 13px; color: rgba(255,255,255,0.38); font-weight: 400; }
+.header-right { display: flex; gap: 10px; align-items: center; }
+/* countdown chip in the header — the only date element, so make it count */
+.header-countdown {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 700;
+  padding: 7px 16px; border-radius: 100px;
+  background: rgba(201,168,76,0.14); border: 1px solid rgba(201,168,76,0.35);
+  color: #f0d070; white-space: nowrap; letter-spacing: 0.01em;
+}
+.header-countdown::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor; flex-shrink: 0;
+}
+
+.header-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.62); white-space: nowrap; letter-spacing: 0.01em;
+}
+
+/* ── NAV ── */
+.nav {
+  background: var(--sidebar-2);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 0 28px; display: flex;
+}
+.nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.38);
+  text-decoration: none; padding: 10px 14px;
+  border-bottom: 2px solid transparent;
+  letter-spacing: 0.02em;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav-link:hover  { color: rgba(255,255,255,0.75); border-bottom-color: rgba(255,255,255,0.15); }
+.nav-link.active { color: rgba(255,255,255,0.88); border-bottom-color: var(--gold); }
+
+/* external prototype link — right-aligned, gold */
+.nav-proto {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; font-weight: 600; color: var(--gold);
+  text-decoration: none; padding: 10px 0; letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+.nav-proto:hover { color: #e2c97a; }
+
+/* ── TAB PANELS ── */
+.tab-panel        { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── PAGE ── */
+.page { max-width: 1100px; margin: 0 auto; padding: 24px 28px 60px; flex: 1; width: 100%; }
+
+/* ── SEC LABEL ── */
+.sec-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.13em;
+  text-transform: uppercase; color: var(--label-color);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 12px;
+}
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--card-border); }
+
+/* ── STATUS CHIPS ── */
+.status-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; border-radius: 4px; padding: 3px 9px;
+  white-space: nowrap; flex-shrink: 0;
+}
+.status-chip::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor; flex-shrink: 0;
+}
+.status-chip.on-track { background: rgba(15,118,110,0.10);  color: #0f766e; }
+.status-chip.watch    { background: rgba(201,168,76,0.14);  color: #a8882c; }
+.status-chip.blocked  { background: rgba(176,74,94,0.10);   color: #b04a5e; }
+.status-chip.pending  { background: rgba(138,115,85,0.10);  color: #8a7355; }
+.status-chip.paused   { background: rgba(44,90,160,0.10);   color: #2c5aa0; }
+
+/* ── PROGRAM BANNER ──
+   Two columns: a compact health summary (left) beside the callout sections
+   (right). Date + countdown live in the sticky header. */
+.program-banner {
+  background: var(--sidebar);
+  border-radius: var(--r);
+  margin-bottom: 24px;
+  box-shadow: 0 2px 16px rgba(12,35,24,0.18);
+  display: grid;
+  grid-template-columns: minmax(190px, auto) 1px 1fr;
+  align-items: stretch;
+  overflow: hidden;
+}
+.banner-col { padding: 24px 28px; display: flex; flex-direction: column; justify-content: center; }
+.banner-divider { background: rgba(255,255,255,0.07); }
+
+/* left — health summary */
+.banner-summary-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.32);
+  margin-bottom: 14px;
+}
+.banner-health { display: flex; flex-direction: column; gap: 9px; }
+.banner-health-row {
+  display: flex; align-items: center; gap: 9px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; color: rgba(255,255,255,0.46);
+  letter-spacing: 0.01em; white-space: nowrap;
+}
+.banner-health-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex: none;
+}
+.banner-health-dot.on-track { background: #4ade80; }
+.banner-health-dot.watch    { background: var(--gold); }
+.banner-health-dot.blocked  { background: #f87171; }
+.banner-health-dot.pending  { background: rgba(255,255,255,0.35); }
+.banner-health-dot.paused   { background: #6a8ec9; }
+.banner-health-val { color: rgba(255,255,255,0.78); font-weight: 700; font-size: 14px; }
+.banner-updated {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px; color: rgba(255,255,255,0.28);
+  letter-spacing: 0.01em; margin-top: 16px;
+}
+
+/* right column — risks or all-clear */
+.banner-risks-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 7px;
+}
+.banner-risks-label::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); flex: none;
+}
+.banner-risks-label.all-clear { color: #4ade80; }
+.banner-risks-label.all-clear::before { background: #4ade80; }
+.banner-risks-label.blocked { color: #f87171; }
+.banner-risks-label.blocked::before { background: #f87171; }
+.banner-risks-label.paused { color: #6a8ec9; }
+.banner-risks-label.paused::before { background: #6a8ec9; }
+
+/* spacing between callout sub-sections (no line — colored labels group them) */
+.banner-section-divider { height: 18px; }
+.banner-risk-more {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.25); text-transform: uppercase;
+}
+
+.banner-risk-row { padding: 4px 0; }
+.banner-risk-row + .banner-risk-row { margin-top: 6px; }
+.banner-risk-team {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.82);
+  margin-bottom: 2px; display: flex; align-items: center; gap: 7px;
+}
+.banner-risk-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--gold-mid);
+  background: rgba(201,168,76,0.14);
+  padding: 1px 6px; border-radius: 3px;
+}
+.banner-risk-tag.blocked { color: #f87171; background: rgba(248,113,113,0.12); }
+.banner-risk-tag.paused  { color: #6a8ec9; background: rgba(106,142,201,0.15); }
+.banner-risk-text {
+  font-size: 12px; color: rgba(255,255,255,0.42); line-height: 1.45;
+  max-width: 860px;
+}
+.all-clear-line {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+}
+
+/* ── TEAMS LIST ──
+   White card, one <details> per team. Two-line collapsed summary:
+   line 1 = name + status chip; line 2 = full one-liner. */
+.teams-list {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+details.team {
+  border-bottom: 1px solid #ede8df;
+  border-left: 3px solid transparent;
+}
+details.team:last-child { border-bottom: none; }
+details.team.on-track           { border-left-color: var(--teal); }
+details.team.on-track.has-watch { border-left-color: var(--gold); } /* on track but being monitored */
+details.team.blocked            { border-left-color: var(--red);  }
+details.team.pending            { border-left-color: var(--t4);   } /* awaiting first update */
+details.team.paused             { border-left-color: #6a8ec9;     } /* on hold */
+
+details.team > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  padding: 16px 20px;
+  display: flex; align-items: flex-start; gap: 14px;
+  transition: background 0.1s;
+}
+details.team > summary:hover { background: #faf8f4; }
+details.team > summary::-webkit-details-marker { display: none; }
+details.team > summary::before {
+  content: "\25B8";
+  color: var(--t3); font-size: 13px; flex: none;
+  transition: transform 0.15s;
+  margin-top: 3px; /* aligns with first text line */
+}
+details.team[open] > summary::before { transform: rotate(90deg); }
+details.team[open] > summary { background: #faf8f4; border-bottom: 1px solid #ede8df; }
+
+.team-summary-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.team-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: -0.01em;
+  color: var(--t1); line-height: 1.25;
+}
+.team-oneliner {
+  font-size: 13px; color: var(--t2); line-height: 1.5;
+}
+
+/* right-side meta column: status chip on top, updated time below */
+.team-summary-meta {
+  flex: none; display: flex; flex-direction: column;
+  align-items: flex-end; gap: 6px; text-align: right;
+}
+.team-updated {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px; color: var(--t3); white-space: nowrap; letter-spacing: 0.01em;
+}
+
+.team-empty { font-size: 13px; color: var(--t3); font-style: italic; margin: 0; }
+
+/* ── TEAM BODY (expanded bullets — info-card ul from #working) ── */
+.team-body {
+  padding: 14px 20px 18px 50px;
+}
+ul.bullets {
+  list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0;
+}
+ul.bullets li {
+  font-size: 13px; color: var(--t2);
+  display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+}
+ul.bullets li::before {
+  content: ''; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--t4); flex-shrink: 0; margin-top: 7px;
+}
+ul.bullets li.is-risk {
+  background: rgba(201,168,76,0.09);
+  border: 1px solid rgba(201,168,76,0.22);
+  border-radius: var(--r-sm); padding: 8px 12px; color: #7a5a1f; margin-top: 2px;
+}
+ul.bullets li.is-risk::before { display: none; }
+ul.bullets li.is-blocked { background: rgba(176,74,94,0.07); border-color: rgba(176,74,94,0.20); color: #7d3142; }
+ul.bullets li .bullet-risk-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.08em;
+  text-transform: uppercase; flex-shrink: 0; padding-top: 2px;
+}
+
+/* ── TEAM CARDS (Teams tab) ──
+   Exact kickoff surface-card idiom: icon + category + name header, then two
+   role rows (DRI/PM top, FE/BE/DE bottom) with colored avatar initials.
+   2-col grid; last card spans full width when it would be an orphan. */
+.roster-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.roster-grid-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r);
+  padding: 16px;
+  box-shadow: var(--card-shadow);
+  display: flex; flex-direction: column; gap: 10px;
+  transition: box-shadow 0.15s;
+}
+.roster-grid-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.09); }
+
+/* header: icon + category + name */
+.roster-card-head { display: flex; align-items: center; gap: 10px; }
+.icon-container {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: #f0ede8;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.card-category {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.10em;
+  text-transform: uppercase; color: var(--label-color);
+}
+.roster-card-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: -0.015em;
+  color: var(--t1); line-height: 1.2;
+}
+
+/* role rows */
+.roles-top    { display: flex; flex-wrap: wrap; gap: 4px; }
+.roles-bottom { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.role-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 500; color: var(--t1);
+  background: #f8f5ef; border: 1px solid var(--card-border);
+  border-radius: 5px; padding: 3px 7px; white-space: nowrap;
+}
+.role-lbl {
+  font-size: 9px; font-weight: 800; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 1px 5px; border-radius: 3px;
+  margin-right: 2px;
+}
+/* avatar initials */
+.av {
+  width: 14px; height: 14px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 7px; font-weight: 800; color: white; flex-shrink: 0;
+}
+.role-chip.r-dri { background: rgba(201,168,76,0.07);  border-color: rgba(201,168,76,0.22); }
+.role-chip.r-dri .role-lbl { background: rgba(201,168,76,0.18); color: #92700a; }
+.role-chip.r-pm  { background: rgba(15,118,110,0.06);  border-color: rgba(15,118,110,0.18); }
+.role-chip.r-pm  .role-lbl { background: rgba(15,118,110,0.14); color: #0d6860; }
+.role-chip.r-fe  { background: rgba(79,70,229,0.05);   border-color: rgba(79,70,229,0.16); }
+.role-chip.r-fe  .role-lbl { background: rgba(79,70,229,0.11);  color: #4338ca; }
+.role-chip.r-be  { background: rgba(124,58,237,0.05);  border-color: rgba(124,58,237,0.16); }
+.role-chip.r-be  .role-lbl { background: rgba(124,58,237,0.11); color: #6d28d9; }
+.role-chip.r-de  { background: rgba(71,85,105,0.05);   border-color: rgba(71,85,105,0.14); }
+.role-chip.r-de  .role-lbl { background: rgba(71,85,105,0.09);  color: #475569; }
+.role-chip.r-ecom { background: rgba(190,24,93,0.05);  border-color: rgba(190,24,93,0.16); }
+.role-chip.r-ecom .role-lbl { background: rgba(190,24,93,0.11); color: #be185d; }
+
+/* ── DRI NOTES (own tab) ──
+   Cross-cutting decisions / watch / actions, 3-col info-grid (kickoff idiom). */
+.dri-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r);
+  box-shadow: var(--card-shadow);
+  padding: 20px 24px;
+}
+.dri-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 8px;
+}
+.dri-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: var(--t1);
+}
+.dri-updated {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px; color: var(--t3); white-space: nowrap; letter-spacing: 0.01em;
+}
+.dri-summary {
+  font-size: 13.5px; color: var(--t2); line-height: 1.6;
+  max-width: 980px; margin-bottom: 22px;
+}
+.dri-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  padding-top: 18px; border-top: 1px solid #ede8df;
+}
+.dri-group-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.10em;
+  text-transform: uppercase; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 7px;
+}
+.dri-group-title::before { content: ''; width: 6px; height: 6px; border-radius: 50%; flex: none; }
+.dri-group-title.decisions { color: var(--teal); }
+.dri-group-title.decisions::before { background: var(--teal); }
+.dri-group-title.watch { color: var(--gold-mid); }
+.dri-group-title.watch::before { background: var(--gold); }
+.dri-group-title.actions { color: #2c5aa0; }
+.dri-group-title.actions::before { background: #2c5aa0; }
+.dri-group ul { list-style: none; display: flex; flex-direction: column; gap: 9px; margin: 0; padding: 0; }
+.dri-group li {
+  font-size: 12.5px; color: var(--t2); line-height: 1.5;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.dri-group li::before {
+  content: ''; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--t4); flex-shrink: 0; margin-top: 7px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--sidebar);
+  padding: 16px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px; color: rgba(255,255,255,0.28); letter-spacing: 0.02em;
+}
+footer span { color: rgba(255,255,255,0.42); }
+footer code {
+  background: rgba(255,255,255,0.08); padding: 1px 6px;
+  border-radius: 4px; font-size: 10px; color: rgba(255,255,255,0.45);
+}
+
+/* ── EMPTY STATE ── */
+.empty-state { color: var(--t3); font-size: 13px; padding: 20px 0; }
+
+/* ── MOBILE ── */
+@media (max-width: 760px) {
+  .header { padding: 0 20px; }
+  .page { padding: 24px 16px 60px; }
+  .program-banner { grid-template-columns: 1fr; }
+  .banner-divider { display: none; }
+  .banner-col { padding: 18px 20px; }
+  .banner-col + .banner-col { border-top: 1px solid rgba(255,255,255,0.07); }
+  .header-countdown { display: none; }
+  .roster-grid { grid-template-columns: 1fr; }
+  .dri-grid { grid-template-columns: 1fr; gap: 20px; }
+  details.team > summary { padding: 14px 16px; }
+  .team-body { padding-left: 18px; }
+  .nav { padding: 0 20px; }
+  footer { flex-direction: column; gap: 4px; padding: 16px 20px; text-align: center; }
+}
