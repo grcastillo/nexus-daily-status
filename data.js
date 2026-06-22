@@ -88,15 +88,16 @@ window.NEXUS_DATA = {
     },
     {
       name: 'Signal Tower',
-      updatedAt: '2026-06-18T18:27:00',
+      updatedAt: '2026-06-22T13:28:00',
       bullets: [
-        'Casey targeting a working prototype with settings + notifications by early Monday; build generally on track, though data-model and settings discussions may cause minor delays',
-        'Ashley moving fast on the front end — 3 PRs open, 2 more today (alerts list + detailed modal) plus the settings-tab PR by EOD',
-        'Discount-rate metrics nearly done; voids and returns next — Matt and Casey pairing Monday on data shape and queries',
-        'Casey + Ashley finalizing the API contract today to align front-end and back-end before the weekend; Marina closing out requirements, docs, and prototype updates',
-        'Global permissions confirmed: org admins set thresholds + notifications at the highest level for Phase 1',
+        'Friday demo target: first two tabs demoable (settings + notifications) at the 1:30 PM ET show-and-tell',
+        'Casey syncing with Ashley for click testing on alert configs and notification settings; Ashley merging PRs today + finalizing API contract with Casey',
+        'Fraud discovery kicking off — getting time with Stacy & Co to validate fraud use cases and thresholds',
+        'Coordination needed with Reporting (Mack) to avoid duplicating risk-related work on the budtender performance/risk modal',
+        'Global permissions confirmed: org admins set thresholds + notifications at the highest level for the initial launch',
         'Compliance alerts (METRC sync errors, closeout discrepancies) will run nightly to manage cost; still investigating which sync errors are actionable vs. auto-resolving',
-        'Watch: no fraud-domain SME to validate key use cases — Levi connecting with Sam Petrowski (ACH Ops) to define a tight initial signal list, confirm data availability + costs, and plan rollout',
+        'Watch: Snowflake stage DB is a demo risk — Don coordinating with Luan to assess scope',
+        'Watch: fraud-domain validation in progress — getting time with Stacy & Co; Levi also connecting with Sam Petrowski (ACH Ops) on initial signal list + costs',
       ],
     },
     {
