@@ -96,7 +96,6 @@ window.NEXUS_DATA = {
         'Coordination needed with Reporting (Mack) to avoid duplicating risk-related work on the budtender performance/risk modal',
         'Global permissions confirmed: org admins set thresholds + notifications at the highest level for the initial launch',
         'Compliance alerts (METRC sync errors, closeout discrepancies) will run nightly to manage cost; still investigating which sync errors are actionable vs. auto-resolving',
-        'Watch: Snowflake stage DB is a demo risk — Don coordinating with Luan to assess scope',
         'Watch: fraud-domain validation in progress — getting time with Stacy & Co; Levi also connecting with Sam Petrowski (ACH Ops) on initial signal list + costs',
       ],
     },
