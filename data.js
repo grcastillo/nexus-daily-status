@@ -29,17 +29,12 @@ window.NEXUS_DATA = {
   teams: [
     {
       name: 'Inventory Planning',
-      updatedAt: '2026-06-18T16:57:00',
+      updatedAt: '2026-06-22T13:40:00',
       bullets: [
-        'Ownership confirmed (via Tom/Levi): Mike Luon → Reports; Steven Morton → Inventory Planning back end (flipped from yesterday). Mike joining Marina\'s check-in to scope what Reports entails',
-        'Scope — the "I Need More Stuff" report surfaces reorder data for dispensaries that are out of stock. Phase 1 delivers the data + intelligence layer only (users still build reports their existing way — PDF, email, LeafLink/Elite); Phase 2 adds workflows (create PO, send to Dutchie Connect, accept brand-funded discounts)',
-        'Design ~85–90% complete; the page surfaces high-level portfolio metrics, stock breakdown (category → SKU), stock-out forecast, and speed tables — leaving room for changes from customer interviews over the next couple weeks',
-        'Fresh data (Mike): restoring + cleansing a Mesa production DB (multi-tenant, current as of today) — handoff to Matt Cawson by Monday; newly rolled vape instances will point at that Snowflake instance for real data',
-        'Architecture (Roey): FiveTran → Snowflake → per-account models (Matt) with specific tables dumped to S3; reverse ETL into the Sales SQL Server via Hangfire (Eric); out-of-stock/low-stock treatments use a direct Snowflake query from Web API. vape mirrors the prod pipeline via a shared GoldDB snapshot',
-        'Aligned with Dutchie Connect — retailer reorder side (us) vs. brand restock side (them); confirmed no Connect data is being reused, starting fresh',
-        'Evan: solid progress on the SKUs table (some rework from vape quirks), targeting a draft for Roey to review before he is out. Steven onboarding from the SKUs table; Gordy sharing the metric-definitions doc',
-        'Team still forming: Steven Morton and Rex joining; Mike Luon and Roey currently out. Eric Livergood migrating off due to workload — Rex rotating in as back-end. Ned meeting with the team today to set weekly goals',
-        'Watch: Roey out for 2 weeks; Eric Livergood rotating off — team resourcing thin while back-end work ramps. Stand-up moved earlier to align with the daily DRI check-in',
+        'SKU Table/View, SKU Table UI (with mock API), and back-end contracts / API all progressing this week',
+        'Evan: reusable table UI component complete; working on SKU Table UI. Stephen: PR open for SKU view/table. Matt Cossin: S3→SQL dependency scoped and handed off to Stephen',
+        'Rex and Ned onboarding this week; Rex working with Evan + Stephen on back-end contracts. Roey on vacation; Mike OOO today and rotating off the team',
+        'Blocked: Snowflake → S3 → SQL Server pipeline not yet done — blocking final progress. A global concern, not just inventory. Escalated to Tim, Eric Livergood, Chris, and Tom',
       ],
     },
     {
