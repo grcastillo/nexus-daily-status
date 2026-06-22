@@ -76,13 +76,12 @@ window.NEXUS_DATA = {
     },
     {
       name: 'Customer Sentiment',
-      updatedAt: '2026-06-22T13:52:00',
+      updatedAt: '2026-06-22T14:46:00',
       bullets: [
-        'Willian has two PRs ready for review (LeafLogix mock data + UI); Eric nearly done reviewing — flagged source type filtering as a backend impact item',
-        'John has three consumer touchpoints prototyped (post-checkout survey, receipt QR code, order confirmation email); Marina reviewing language and UI',
-        'Weedmaps data can be simulated internally via GoldDB for demo/dev — demo unblocked; production data access question remains open (Chris O. is DRI for outreach)',
-        'Matt: V1 data modeling in GoldDB this week; Levi: Dagster enrichment job running every 8 hrs (cron until Ricardo returns), integrates once data flows to Snowflake',
-        'Demo readiness: Willian finalizing UI with mock data for Friday; Sarah investigating retry mechanism for survey submission + confirming demo readiness; Eric beginning Google OAuth discovery',
+        'Willian: all controllers + repositories in place with mocked data for the full app; all FE connected to controllers. Stretch goal: repos pointing to Snowflake where mock data is',
+        'Sarah: survey implemented and posting real data through ecomm → Arma → public API → stored in LLx (accessible via URL; no purchase-flow integration required yet)',
+        'Eric: develop configured to pull real Weedmaps data for a couple of customers — full flow pulling down and storing in LLx',
+        'Eric + Matt: fake sample data into GoldDB; Matt: data models into Snowflake importing from GoldDB',
         'Watch: source type filtering flagged by Eric as a backend impact item — needs investigation',
         'Watch: first-party review moderation approach still open — Marina working through dismiss/update flows',
       ],
