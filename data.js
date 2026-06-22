@@ -65,13 +65,14 @@ window.NEXUS_DATA = {
     },
     {
       name: 'Reporting',
-      updatedAt: '2026-06-22T13:28:00',
+      updatedAt: '2026-06-22T15:30:00',
       bullets: [
-        'Discount metrics (manual discount rate, average discount %) in flight; Matt and Casey pairing today to review PR and logic',
-        'Friday demo target: first two tabs demoable for the 1:30 PM ET show-and-tell',
-        'Fraud discovery kicking off — coordinating with Stacy & Co to validate fraud use cases and thresholds',
-        'Coordination needed with Signal Tower + Mack to avoid duplicating risk-related work on the budtender performance/risk modal',
-        'Watch: Snowflake stage DB is a demo risk — Don aligning with Luan on refresh scope',
+        'Friday demo target: Budtender performance report demoable end-to-end at 1:30 PM ET show-and-tell — serves as the reusable framework; remaining report pages copy the pattern and build in parallel once it lands',
+        'Mack: finalizing refinement doc (architecture lock decisions); targeting first PR for the full Budtender page',
+        'Matt Cossin: moving to PR review and guidance role on this workstream; budtender data layer shipped and live (daily fact table, semantic view by budtender, register wait-time metric)',
+        'Seth Newman: refining the sales overview section; prepping discovery doc so next report starts immediately after Budtender',
+        'Andrew: starting the sales and revenue module',
+        'Marina: daily snapshot prototype PR merged; next up — inventory valuation, morning brief, brand & budtender, scheduled reports',
       ],
     },
     {
