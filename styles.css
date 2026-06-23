@@ -1,7 +1,5 @@
 /*
  * Nexus Daily Summary — styles.
- * Design tokens copied exactly from vape-pages.dutchie.dev/nexus-kickoff.
- * Layout: program banner (dark) → team list → roster cards.
  */
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -64,7 +62,6 @@ body {
 .logo-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.12); margin: 0 4px; }
 .logo-sub { font-size: 13px; color: rgba(255,255,255,0.38); font-weight: 400; }
 .header-right { display: flex; gap: 10px; align-items: center; }
-/* countdown chip in the header — the only date element, so make it count */
 .header-countdown {
   display: inline-flex; align-items: center; gap: 7px;
   font-family: 'Inter', sans-serif;
@@ -77,7 +74,6 @@ body {
   content: ''; width: 6px; height: 6px; border-radius: 50%;
   background: currentColor; flex-shrink: 0;
 }
-
 .header-date {
   font-family: 'Inter', sans-serif;
   font-size: 13px; font-weight: 600;
@@ -100,8 +96,6 @@ body {
 }
 .nav-link:hover  { color: rgba(255,255,255,0.75); border-bottom-color: rgba(255,255,255,0.15); }
 .nav-link.active { color: rgba(255,255,255,0.88); border-bottom-color: var(--gold); }
-
-/* external prototype link — right-aligned, gold */
 .nav-proto {
   margin-left: auto;
   display: inline-flex; align-items: center; gap: 5px;
@@ -148,9 +142,7 @@ body {
 .status-chip.pending         { background: rgba(138,115,85,0.10);  color: #8a7355; }
 .status-chip.paused          { background: rgba(44,90,160,0.10);   color: #2c5aa0; }
 
-/* ── PROGRAM BANNER ──
-   Two columns: a compact health summary (left) beside the callout sections
-   (right). Date + countdown live in the sticky header. */
+/* ── PROGRAM BANNER ── */
 .program-banner {
   background: var(--sidebar);
   border-radius: var(--r);
@@ -164,7 +156,6 @@ body {
 .banner-col { padding: 24px 28px; display: flex; flex-direction: column; justify-content: center; }
 .banner-divider { background: rgba(255,255,255,0.07); }
 
-/* left — health summary */
 .banner-summary-label {
   font-family: 'Inter', sans-serif;
   font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
@@ -194,7 +185,6 @@ body {
   letter-spacing: 0.01em; margin-top: 16px;
 }
 
-/* right column — risks or all-clear */
 .banner-risks-label {
   font-family: 'Inter', sans-serif;
   font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
@@ -214,14 +204,12 @@ body {
 .banner-risks-label.paused { color: #6a8ec9; }
 .banner-risks-label.paused::before { background: #6a8ec9; }
 
-/* spacing between callout sub-sections (no line — colored labels group them) */
 .banner-section-divider { height: 18px; }
 .banner-risk-more {
   font-family: 'Inter', sans-serif;
   font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
   color: rgba(255,255,255,0.25); text-transform: uppercase;
 }
-
 .banner-risk-row { padding: 4px 0; }
 .banner-risk-row + .banner-risk-row { margin-top: 6px; }
 .banner-risk-team {
@@ -249,9 +237,7 @@ body {
   line-height: 1.5;
 }
 
-/* ── TEAMS LIST ──
-   White card, one <details> per team. Two-line collapsed summary:
-   line 1 = name + status chip; line 2 = full one-liner. */
+/* ── TEAMS LIST ── */
 .teams-list {
   background: var(--card);
   border: 1px solid var(--card-border);
@@ -259,19 +245,17 @@ body {
   overflow: hidden;
   box-shadow: var(--card-shadow);
 }
-
 details.team {
   border-bottom: 1px solid #ede8df;
   border-left: 3px solid transparent;
 }
 details.team:last-child { border-bottom: none; }
 details.team.on-track           { border-left-color: var(--teal); }
-details.team.on-track.has-watch { border-left-color: var(--gold); } /* on track but being monitored */
+details.team.on-track.has-watch { border-left-color: var(--gold); }
 details.team.blocked            { border-left-color: var(--red);  }
-details.team.partial-blocked    { border-left-color: #d97706;     } /* partially blocked — orange */
-details.team.pending            { border-left-color: var(--t4);   } /* awaiting first update */
-details.team.paused             { border-left-color: #6a8ec9;     } /* on hold */
-
+details.team.partial-blocked    { border-left-color: #d97706;     }
+details.team.pending            { border-left-color: var(--t4);   }
+details.team.paused             { border-left-color: #6a8ec9;     }
 details.team > summary {
   list-style: none; cursor: pointer; user-select: none;
   padding: 16px 20px;
@@ -284,22 +268,17 @@ details.team > summary::before {
   content: "\25B8";
   color: var(--t3); font-size: 13px; flex: none;
   transition: transform 0.15s;
-  margin-top: 3px; /* aligns with first text line */
+  margin-top: 3px;
 }
 details.team[open] > summary::before { transform: rotate(90deg); }
 details.team[open] > summary { background: #faf8f4; border-bottom: 1px solid #ede8df; }
-
 .team-summary-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .team-name {
   font-family: 'DM Sans', sans-serif;
   font-size: 15px; font-weight: 700; letter-spacing: -0.01em;
   color: var(--t1); line-height: 1.25;
 }
-.team-oneliner {
-  font-size: 13px; color: var(--t2); line-height: 1.5;
-}
-
-/* right-side meta column: status chip on top, updated time below */
+.team-oneliner { font-size: 13px; color: var(--t2); line-height: 1.5; }
 .team-summary-meta {
   flex: none; display: flex; flex-direction: column;
   align-items: flex-end; gap: 6px; text-align: right;
@@ -308,13 +287,18 @@ details.team[open] > summary { background: #faf8f4; border-bottom: 1px solid #ed
   font-family: 'Inter', sans-serif;
   font-size: 10.5px; color: var(--t3); white-space: nowrap; letter-spacing: 0.01em;
 }
-
 .team-empty { font-size: 13px; color: var(--t3); font-style: italic; margin: 0; }
-
-/* ── TEAM BODY (expanded bullets — info-card ul from #working) ── */
-.team-body {
-  padding: 14px 20px 18px 50px;
+.team-name-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.team-jira-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+  color: #2c5aa0; text-decoration: none;
+  background: rgba(44,90,160,0.07); border: 1px solid rgba(44,90,160,0.18);
+  border-radius: 4px; padding: 1px 7px; white-space: nowrap;
+  transition: background 0.12s;
 }
+.team-jira-chip:hover { background: rgba(44,90,160,0.14); }
+.team-body { padding: 14px 20px 18px 50px; }
 ul.bullets {
   list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0;
 }
@@ -339,16 +323,12 @@ ul.bullets li .bullet-risk-tag {
   text-transform: uppercase; flex-shrink: 0; padding-top: 2px;
 }
 
-/* ── TEAM CARDS (Teams tab) ──
-   Exact kickoff surface-card idiom: icon + category + name header, then two
-   role rows (DRI/PM top, FE/BE/DE bottom) with colored avatar initials.
-   2-col grid; last card spans full width when it would be an orphan. */
+/* ── ROSTER ── */
 .roster-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
-
 .roster-grid-card {
   background: var(--card);
   border: 1px solid var(--card-border);
@@ -359,8 +339,6 @@ ul.bullets li .bullet-risk-tag {
   transition: box-shadow 0.15s;
 }
 .roster-grid-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.09); }
-
-/* header: icon + category + name */
 .roster-card-head { display: flex; align-items: center; gap: 10px; }
 .icon-container {
   width: 40px; height: 40px; border-radius: 10px;
@@ -378,11 +356,8 @@ ul.bullets li .bullet-risk-tag {
   font-size: 15px; font-weight: 700; letter-spacing: -0.015em;
   color: var(--t1); line-height: 1.2;
 }
-
-/* role rows */
 .roles-top    { display: flex; flex-wrap: wrap; gap: 4px; }
 .roles-bottom { display: flex; flex-wrap: wrap; gap: 4px; }
-
 .role-chip {
   display: inline-flex; align-items: center; gap: 4px;
   font-family: 'Inter', sans-serif;
@@ -395,7 +370,6 @@ ul.bullets li .bullet-risk-tag {
   text-transform: uppercase; padding: 1px 5px; border-radius: 3px;
   margin-right: 2px;
 }
-/* avatar initials */
 .av {
   width: 14px; height: 14px; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
@@ -414,8 +388,7 @@ ul.bullets li .bullet-risk-tag {
 .role-chip.r-ecom { background: rgba(190,24,93,0.05);  border-color: rgba(190,24,93,0.16); }
 .role-chip.r-ecom .role-lbl { background: rgba(190,24,93,0.11); color: #be185d; }
 
-/* ── DRI NOTES (own tab) ──
-   Cross-cutting decisions / watch / actions, 3-col info-grid (kickoff idiom). */
+/* ── DRI NOTES ── */
 .dri-card {
   background: var(--card);
   border: 1px solid var(--card-border);
@@ -466,6 +439,175 @@ ul.bullets li .bullet-risk-tag {
   background: var(--t4); flex-shrink: 0; margin-top: 7px;
 }
 
+/* ── PHASE 2 SCOPE LOG ── */
+.scope-summary {
+  display: flex;
+  align-items: stretch;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.scope-summary-item {
+  flex: 1;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.scope-summary-divider {
+  width: 1px;
+  background: var(--card-border);
+  align-self: stretch;
+}
+.scope-summary-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--t1);
+  line-height: 1;
+}
+.scope-summary-item.deferred .scope-summary-count { color: #a8882c; }
+.scope-summary-item.restored .scope-summary-count { color: var(--teal); }
+.scope-summary-item.neutral .scope-summary-count  { color: var(--t2); }
+.scope-summary-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--t3);
+  font-weight: 500;
+}
+
+.scope-entry {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--r);
+  box-shadow: var(--card-shadow);
+  padding: 16px 20px;
+  margin-bottom: 10px;
+}
+.scope-entry.restored { border-left-color: var(--teal); }
+.scope-entry-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.scope-entry-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.scope-area {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--t1);
+  letter-spacing: -0.01em;
+}
+.scope-jira-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2c5aa0;
+  text-decoration: none;
+  background: rgba(44,90,160,0.07);
+  border: 1px solid rgba(44,90,160,0.18);
+  border-radius: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  transition: background 0.12s;
+}
+.scope-jira-link:hover { background: rgba(44,90,160,0.13); }
+.scope-decision-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.scope-decision-chip.deferred {
+  background: rgba(201,168,76,0.14);
+  color: #a8882c;
+}
+.scope-decision-chip.restored {
+  background: rgba(15,118,110,0.10);
+  color: #0f766e;
+}
+.scope-entry-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.scope-pr-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2c5aa0;
+  text-decoration: none;
+}
+.scope-pr-link:hover { text-decoration: underline; }
+.scope-meta-sep { color: var(--t4); font-size: 11px; }
+.scope-author {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--t2);
+}
+.scope-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: var(--t3);
+  white-space: nowrap;
+}
+.scope-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.scope-features li {
+  font-size: 13px;
+  color: var(--t2);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.scope-features li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--t4);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+.scope-note {
+  font-size: 12px;
+  color: var(--t3);
+  font-style: italic;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #ede8df;
+  line-height: 1.55;
+}
+
 /* ── FOOTER ── */
 footer {
   background: var(--sidebar);
@@ -498,4 +640,6 @@ footer code {
   .team-body { padding-left: 18px; }
   .nav { padding: 0 20px; }
   footer { flex-direction: column; gap: 4px; padding: 16px 20px; text-align: center; }
+  .scope-summary { flex-direction: column; }
+  .scope-summary-divider { width: auto; height: 1px; }
 }

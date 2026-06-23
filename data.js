@@ -1,127 +1,93 @@
 /*
  * Nexus Daily Summary — data source of truth.
- *
- * Single live board (no dated history). Each team is updated independently
- * throughout the day and carries its own `updatedAt` timestamp so viewers can
- * see when that team was last touched.
- *
- * To post an update for one or more teams, see README.md — you paste the
- * update, Claude rewrites those teams' bullets and stamps `updatedAt` to now.
- * Teams you don't mention are left exactly as they were.
- *
- * `updatedAt` is Eastern wall-clock time (naive ISO, no offset) — it renders
- * verbatim as "Mon D, H:MM AM/PM ET" for every viewer regardless of their
- * browser timezone.
- *
- * Status and the one-line summary are DERIVED from the raw `bullets` at render
- * time (see app.js). Keep bullets raw; a bullet starting "Watch:" is a
- * monitoring note, "Blocked:" marks the team off-track.
  */
 window.NEXUS_DATA = {
-  // Launch target — the countdown ("N days to 7/20") is computed from `date`.
   launchDate: '2026-07-20',
   launchLabel: '7/20',
+  date: '2026-06-22',
 
-  // The day this board represents (header date + countdown anchor).
-  date: '2026-06-23',
-
-  // Teams. Order here is the display order. Each carries its own updatedAt.
   teams: [
     {
       name: 'Inventory Planning',
-      updatedAt: '2026-06-23T15:58:00',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-700',
+      updatedAt: '2026-06-22T13:40:00',
       bullets: [
-        'SKU Table/View, SKU Table UI (with mock API), and back-end contracts all progressing; three milestones on track',
-        'Stephen: PR merged making detail available; next step is S3 export linked to SQL Server',
-        'Evan: WIP prototype of SKU table in progress; building base components for Nexus consistency, continuing to pick away at other prototype components',
-        'Rex: Nexus crash-course complete, constellation set up in VAPE; refining back-end contracts with Stephen and Evan',
-        'Gordy: small UI tweaks (de-nesting double-nested columns)',
-        'Ned onboarding; Roey on vacation (returns July 6 — BE refinement work starts then); Mike rotating off team',
-        'Watch: Data DRI ownership has shifted and needs formal clarification',
-        'Watch: New Purchase Order system flagged by Whit Perkins — Nexus operations that add to order will populate POs, and the UI needs to close the loop',
-        'Mitigation: team will agree on contracts + expected data state to continue SKU table work even while the blocker is unresolved; focused discussion to be scheduled on timeline and ownership',
-        'Blocked: Snowflake → S3 → SQL Server pipeline not yet done — blocking final delivery. A global concern escalated to Eric Livergood, Chris Ostrowski, and Tom Wonneberger',
+        'SKU Table/View, SKU Table UI (with mock API), and back-end contracts / API all progressing this week',
+        'Evan: reusable table UI component complete; working on SKU Table UI. Stephen: PR open for SKU view/table. Matt Cossin: S3→SQL dependency scoped and handed off to Stephen',
+        'Rex and Ned onboarding this week; Rex working with Evan + Stephen on back-end contracts. Roey on vacation; Mike OOO today and rotating off the team',
+        'Blocked: Snowflake → S3 → SQL Server pipeline not yet done — blocking final progress on the data layer. A global concern, not just inventory. Escalated to Eric Livergood, Chris Ostrowski, and Tom Wonneberger',
       ],
     },
     {
       name: 'Dex',
-      updatedAt: '2026-06-23T12:19:00',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-707',
+      updatedAt: '2026-06-22T12:08:00',
       bullets: [
-        'Phase 1 scope locked at 5 use cases; workflows in active implementation',
-        'Scott Dietrich: focused on AI Budtender (Register Gamification) — reduced bandwidth for Dex; Chris Campbell is currently the primary Dex driver. Flagged as a potential risk.',
-        'Campbell: drafted capabilities layer for Nexus (per Chris request); back to campaign flow (start from template); reviewed and approved Dreeben\'s draft PRs from before paternity leave',
-        'Chris to post proposal for a shared API surface for FE UI components and Dex — enabling non-Dex teams to build Dex-consumable features',
-        'Katie Goodwin: brainstorming Day 2+ Dex use cases for Products & Inventory with Bilda + Contexta; mapping out triggers, invocation type, context Dex inherits, and access needs into a consumable doc — brief refinements to follow',
-        'Driban out ~2 weeks on paternity leave; dropped 2 draft PRs before departing — scope held for his return',
-        'Product decisions: Phase 1 invocation uses two existing pathways only (inline deferred to P2); free text allowed as build signal; auditing lean toward "done by Dex" flag + person in conversation',
-        'Non-Dex build pattern: Campbell accepted establishing a standard for non-Dex teams to build Dex-consumable features (data/action/presentation layers)',
-        'Watch: Dex flagged as a potential risk — Scott\'s bandwidth reduced while on AI Budtender; Chris is sole driver for now',
-        'Watch: no performed-by field in the current audit flow — audit UX clunky; Chris investigating',
+        'Phase 1 workflows in active implementation; scope locked at 5 use cases to preserve time for usability, invocation, and auditing',
+        'Scott Dietrich: Slow-Movers ~80% done and working — reviewing code, then to Chris today; continuing Budtender Copilot threshold nudge with Gordy',
+        'Campbell: finished observability improvements + dutchie-agent integration; reviewing Scott\'s code; investigating auditing capabilities',
+        'Katie Goodwin: observability cards now per-item; adding invocation methods to prototype; mocking up "Dex in situ"',
+        'Driban out ~2 weeks on paternity leave; his use case held for his return',
+        'Product decisions: Phase 1 invocation uses two existing pathways only (in-context/inline deferred to Phase 2); free text allowed and captured as a build signal; auditing will lean toward a "done by Dex" flag per item + surfacing the person in conversation',
+        'New ask from DRI sync: Chris O. requested an established pattern for non-Dex teams to build Dex-consumable features (separating data/action/presentation layers); Campbell accepted this as a Phase 1 task',
+        'Watch: no performed-by field in the current audit flow — audit UX is clunky; Chris investigating',
       ],
     },
     {
       name: 'Command Center',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-703',
       updatedAt: '2026-06-22T14:00:00',
       paused: true,
-      pausedReason: 'On hold — roll-up sections resume with Reporting; two standalone sections (Today\'s Pulse + one Morning Brief item) need separate planning.',
+      pausedReason: 'On hold pending Reporting, Inventory Planning, and Signal Tower completion — small UI updates possible based on executive and customer feedback.',
       bullets: [
-        'DRI recommendation: piggyback roll-up sections off Reporting work; plan Today\'s Pulse and one Morning Brief item separately as standalone sections',
-        'Gordy auditing Command Center to identify all non-roll-up sections and produce a list for planning',
-        'Today\'s Pulse and one Morning Brief item confirmed as standalone — not covered by Reporting work; require separate work to determine data sources',
+        'Roll-up surface — aggregates data from the other pages, so it resumes once Reporting, Inventory Planning, and Signal Tower are complete',
         'Resource shuffle: Mike Luon → Reports; Steven Morton → Inventory Insights; Rex → Inventory Planning (back-end)',
         'Scott on Register Copilot',
+        'Small UI updates may happen in the interim based on executive and customer feedback',
       ],
     },
     {
       name: 'Reporting',
-      updatedAt: '2026-06-23T15:55:00',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-706',
+      updatedAt: '2026-06-22T13:28:00',
       bullets: [
-        'Budtender performance report end-to-end demo for Friday\'s show-and-tell; serves as the reusable framework — remaining report pages copy the pattern and build in parallel once it lands',
-        'Mack: refinement doc merged with architecture decisions; Budtender performance page spun up, addressing Evan\'s PR feedback (merge soon); next: individual budtender page view',
-        'Seth: PR out shortly for semantic view + data model changes to capture missing budtender metrics; leaflogix controller endpoints started — targeting finish today/tomorrow',
-        'Matt + Stephen: scoping a small report-layer change so reports read metric definitions from the semantic layer (not raw facts and dimensions); Stephen testing against a live report for a quick go/no-go',
-        'Andrew: refinement doc posted for the sales & revenue module; addressing open design decisions before locking the architectural section and chunking out the work',
-        'Marina: design review and updates complete across all reports; assessing morning brief feasibility, then provisioning and config checks',
-        'Command Center reporting dependencies flagged — parking-lot conversation needed with Gordy and Tara to clarify what Reporting work unblocks vs. what Command Center needs separately',
-        'Brands report design review still pending — scheduled with Whit Perkins',
-        'Open question: should selectable date ranges be constrained (e.g., past 1 year only) to avoid performance issues from legacy reporting?',
-        'Watch: report-layer architecture decision pending (Matt + Stephen) — resolving fast to lock consistent patterns before parallelizing',
+        'Discount metrics (manual discount rate, average discount %) in flight; Matt and Casey pairing today to review PR and logic',
+        'Friday demo target: first two tabs demoable for the 1:30 PM ET show-and-tell',
+        'Fraud discovery kicking off — coordinating with Stacy & Co to validate fraud use cases and thresholds',
+        'Coordination needed with Signal Tower + Mack to avoid duplicating risk-related work on the budtender performance/risk modal',
+        'Watch: Snowflake stage DB is a demo risk — Don aligning with Luan on refresh scope',
       ],
     },
     {
       name: 'Customer Sentiment',
-      updatedAt: '2026-06-23T16:44:00',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-704',
+      updatedAt: '2026-06-22T14:46:00',
       bullets: [
-        'Replication PRs completing today — data starts flowing to all environments; Matt begins modeling tomorrow and meeting with Levi on themes/tagging pipeline',
-        'ARMA PR ready for review and testing — Sarah targeting morning release, then shifting to front-end prototype work; sharing data flow diagram with team',
-        'Willian: controllers + repositories in place with mocked data; all FE connected (Eric approved both PRs)',
-        'John\'s updated prototype designs pushed to next week (stretched across multiple AI projects); Sarah confirmed she can work with existing designs in the meantime',
-        'Marina: prototype cleanup in progress — refining brands, pain points, and chip layout, incorporating permissioning',
-        'Amanda potentially taking on briefs work (raw data + AI queries)',
-        'Weedmaps: Chris O. sent note to Weedmaps CPO (no response yet); Eric already pulling real data on develop for a couple of customers',
+        'Willian: all controllers + repositories in place with mocked data for the full app; all FE connected to controllers. Stretch goal: repos pointing to Snowflake where mock data is',
+        'Sarah: survey implemented and posting real data through ecomm → Arma → public API → stored in LLx (accessible via URL; no purchase-flow integration required yet)',
+        'Eric: develop configured to pull real Weedmaps data for a couple of customers — full flow pulling down and storing in LLx',
+        'Eric + Matt: fake sample data into GoldDB; Matt: data models into Snowflake importing from GoldDB',
         'Watch: source type filtering flagged by Eric as a backend impact item — needs investigation',
-        'Watch: auth issues testing PAPI endpoint; Rspec workaround required to run CI on VAPE',
-        'Watch: unresolved — should survey display for ecomm dispensaries without a LeafLogix integration, and where does that data get stored?',
+        'Watch: first-party review moderation approach still open — Marina working through dismiss/update flows',
       ],
     },
     {
       name: 'Signal Tower',
-      updatedAt: '2026-06-23T16:40:00',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-702',
+      updatedAt: '2026-06-22T13:28:00',
       bullets: [
-        'Service vs. monolith decision being finalized this week — current direction is monolith first, build service in parallel; Casey flagged post-launch migration doubles the timeline (2→4 weeks)',
-        'Email notifications confirmed for Phase 1; Marina updating prototypes with email samples',
-        'Permissioning for Signal Tower undefined — Marina defining and documenting today to unblock Casey on threshold and alert configs',
-        'Matt Cossin: walking through discount/metric business logic with Silverblatt today; moving to void rate queries after — goal: business logic reviewed and queried by EOD',
-        'Ashley Long: consolidated FE PR out for review; syncing with Mack on budtender performance page and risk score breakdown',
-        'Demo data problem addressed: Mike Luan looped in to create refreshable external-facing demo data in Snowflake',
-        'Loyalty fraud alerting meeting tomorrow with loyalty and marketing stakeholders',
-        'Watch: compliance tab scope (Phase 1 vs Phase 2) still open — Marina reviewing with Katie',
-        'Watch: alert freshness lag up to 2 hours from action to alert (1hr evaluation + 1hr Snowflake) — stakeholders need to be aware',
-        'Watch: service vs. monolith architecture — decision targeted for this week; resolution needed before build continues at scale',
+        'Friday demo target: first two tabs demoable (settings + notifications) at the 1:30 PM ET show-and-tell',
+        'Casey syncing with Ashley for click testing on alert configs and notification settings; Ashley merging PRs today + finalizing API contract with Casey',
+        'Fraud discovery kicking off — getting time with Stacy & Co to validate fraud use cases and thresholds',
+        'Coordination needed with Reporting (Mack) to avoid duplicating risk-related work on the budtender performance/risk modal',
+        'Global permissions confirmed: org admins set thresholds + notifications at the highest level for the initial launch',
+        'Compliance alerts (METRC sync errors, closeout discrepancies) will run nightly to manage cost; still investigating which sync errors are actionable vs. auto-resolving',
+        'Watch: fraud-domain validation in progress — getting time with Stacy & Co; Levi also connecting with Sam Petrowski (ACH Ops) on initial signal list + costs',
       ],
     },
     {
       name: 'Menu Boards',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-701',
       updatedAt: '2026-06-18T17:18:00',
       bullets: [
         'Chris Ostrowski remains technical DRI; Cyril Van Dyke joining for e-commerce engineering representation',
@@ -131,6 +97,7 @@ window.NEXUS_DATA = {
     },
     {
       name: 'Voice AI',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-705',
       updatedAt: '2026-06-18T17:18:00',
       bullets: [
         'Chris Ostrowski remains technical DRI; Cyril Van Dyke joining for e-commerce engineering representation',
@@ -140,38 +107,119 @@ window.NEXUS_DATA = {
     },
   ],
 
-  // Overarching DRI notes — cross-cutting decisions, risks, and actions from the
-  // DRI sync. Rendered as its own section below the team list.
   driNotes: {
     title: 'DRI sync',
-    updatedAt: '2026-06-23T16:48:00',
+    updatedAt: '2026-06-22T14:00:00',
     decisions: [
-      'Command Center: roll-up sections piggyback off Reporting; Today\'s Pulse and one Morning Brief item are standalone and need separate planning. Gordy auditing to identify all non-roll-up sections.',
-      'Inventory reverse ETL mitigation: team to agree on contracts + expected data state to continue SKU table work despite the S3→SQL Server blocker; focused discussion to be scheduled.',
-      'Pathfinder: Eric standing up Pathfinder for the team; main task is creating an API surface so Roey can continue work without GraphQL reliance when he returns.',
-      'Shared API surface proposal: Chris Campbell preparing a proposal for a shared API surface for FE UI components and Dex — post coming soon.',
-      'QA resourcing resolved: Ben (primary) + cnochez (backup). Ben on parental leave end of July; will coordinate with QIE for testing-infra needs.',
-      'Friday show-and-tell at 1:30 PM ET from develop.backoffice.dutchie.dev — Budtender Reporting is the lead demo.',
+      'QA resourcing resolved: Ben assigned as primary QA owner (automated e2e coverage + manual e2e as pieces come online). Cnochez added as backup — Ben goes on parental leave end of July. Ben and Don will coordinate with QIE for any testing-infra needs.',
+      'Dex Phase 1 capped at 5 use cases to protect time for auditing, usability, and invocation (not adding more cases).',
+      'Non-Dex build pattern: Chris O. requested a standard for non-Dex teams to build Dex-consumable features (separating data/action/presentation layers). Campbell accepted as a Phase 1 task.',
+      'Inventory: Eric Livergood migrating off due to workload — Rex rotating in as back-end. Ned meeting with team today to set weekly goals.',
+      'Friday show-and-tell at 1:30 PM ET — teams demo from the develop branch (merged work auto-deploys to dev). Budtender Reporting (Command Center/Reporting) is the lead demo.',
+      'Command Center remains on hold until Reporting, Inventory Planning, and Signal Tower are complete.',
     ],
     watch: [
-      'Dex at potential risk: Scott focused on AI Budtender reducing Dex bandwidth; Chris Campbell is sole driver. Team generally ahead except for this.',
-      'Inventory reverse ETL blocker (S3 → SQL Server): timeline and ownership still being determined — focused discussion needed.',
-      'Signal Tower service vs. monolith: direction is monolith first with parallel service build; decision being finalized this week.',
-      'Consumer Pulse: unresolved question — should survey display for ecomm dispensaries without LeafLogix integration, and where does data go?',
-      'Signal Tower + Reporting alignment: must coordinate on shared budtender performance/risk modal to avoid duplication.',
+      'Weedmaps data access (biggest at-risk): Customer Sentiment is gated on whether Weedmaps data can be pulled — may require a commercial/permission agreement. Chris O. is DRI for outreach.',
+      'Signal Tower fraud expertise: no SME yet to validate fraud use cases. Levi connecting with Sam Petrowski (ACH Ops) to define an initial signal list + confirm data availability and costs.',
+      'Inventory resourcing thin: Roey out 2 weeks; Eric Livergood rotating off. Team still forming as Rex and Steven Morton ramp.',
     ],
     actions: [
-      'Gordy: audit Command Center to list non-roll-up sections; plan how to obtain required data for standalone sections (Today\'s Pulse, Morning Brief item).',
-      'Eric: stand up Pathfinder; create API surface for Roey to avoid GraphQL reliance (or confirm why GraphQL must remain).',
-      'Chris Campbell: post shared API surface proposal for FE + Dex.',
-      'Schedule focused discussion on reverse ETL blocker: how long will it take and who owns it?',
-      'Chris O.: Weedmaps CPO outreach — awaiting response on data access partnership.',
-      'Levi: Connect with Sam Petrowski (ACH Ops) on fraud signal list + costs.',
+      'Chris O.: Weedmaps outreach — confirm data access for Customer Sentiment.',
+      'Levi: Connect with Sam Petrowski (ACH Ops); define tight initial fraud signal list with costs and rollout plan.',
+      'Gordy: Coordinate with PMs on Friday demo content (30-min slot); arrange Loom recordings of additional items for Tim.',
+      'Chris Campbell: Clarify deploy behavior across repos (web API, database, services) for demo readiness.',
+      'Ned: Meet with Inventory team today; set weekly goals.',
     ],
   },
 
-  // Team roster — static, not per-day. Rendered on the Roster tab.
-  // Columns: project, dri (Project DRI), pm, fe, be, de.
+  // Phase 2 scope decisions — sourced from dutchie-nexus-prototype PRs.
+  // Each entry: date (Eastern), area, features[], decision ('deferred'|'restored'), pr #, author, optional note.
+  phase2Log: [
+    {
+      date: '2026-06-16',
+      area: 'Platform',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/POS-17636',
+      features: [
+        'Hub SubTabBar (all secondary nav within hubs)',
+        'All routes outside Phase 1 set: Orders, Products, Customers, Inventory hub, and all other hubs',
+      ],
+      decision: 'deferred',
+      pr: 19,
+      author: 'Roey Herzel',
+      note: 'Framework PR establishing the Phase 1 nav config. Everything not listed in PHASE1_SIDEBAR / PHASE1_BOTTOM / PHASE1_MORE is Phase 2 by default.',
+    },
+    {
+      date: '2026-06-17',
+      area: 'Signal Tower',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-702',
+      features: [
+        'Notes tab (Notes Intelligence)',
+      ],
+      decision: 'deferred',
+      pr: 47,
+      author: 'Roey Herzel',
+    },
+    {
+      date: '2026-06-18',
+      area: 'Signal Tower',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-702',
+      features: [
+        '"Near-real-time / Real-time / Depends-on-sync" realism badges',
+        '"SLA breached" badge',
+        'SMS, Slack, and Push notification channels',
+        'Investigate & Assign To actions',
+      ],
+      decision: 'deferred',
+      pr: 60,
+      author: 'Marina',
+    },
+    {
+      date: '2026-06-18',
+      area: 'Consumer Pulse',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-704',
+      features: [
+        'NPS tile',
+        'Unanswered tile',
+        'NPS Overview card',
+        'Dex Insights card',
+        'Respond-to-reviews UI (PulseReviewCard)',
+      ],
+      decision: 'deferred',
+      pr: 62,
+      author: 'Marina',
+    },
+    {
+      date: '2026-06-18',
+      area: 'Budtender Performance',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-706',
+      features: [
+        'Market average row (MetricCard)',
+        'Risk calculation panel',
+        'Insights recommendation',
+        'Coaching insights badge',
+      ],
+      decision: 'deferred',
+      pr: 64,
+      author: 'Marina',
+      note: 'Risk score tile, signal alerts, loyalty flags, and incident timeline were later restored to Phase 1 via PR #66.',
+    },
+    {
+      date: '2026-06-22',
+      area: 'Budtender Performance',
+      jiraUrl: 'https://dutchie.atlassian.net/browse/ROAD-706',
+      features: [
+        'Risk score tile',
+        'Signal alerts',
+        'Loyalty flags',
+        'Incident timeline',
+      ],
+      decision: 'restored',
+      pr: 66,
+      author: 'Marina',
+      note: 'Moved back to Phase 1 — originally deferred in PR #64.',
+    },
+  ],
+
   roster: [
     { project: 'Command Center',  dri: 'Amanda',    pm: 'Gordy',     fe: '',        be: '',                      de: ''             },
     { project: 'Signal Tower',    dri: 'Levi',      pm: 'Marina',    fe: 'Ashley',  be: 'Casey',                 de: 'Cossin / Levi' },
