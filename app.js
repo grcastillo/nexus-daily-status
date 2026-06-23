@@ -1,10 +1,5 @@
 /*
  * Nexus Daily Summary — render + inference.
- *
- * Layout:
- *   program-banner (dark card, 3-col: date/health | countdown | risks)
- *   → sec-label + teams-list (collapsible rows, 2-line summary)
- *   → roster-grid (cards with role chips, Roster tab)
  */
 (function () {
   'use strict';
@@ -24,9 +19,6 @@
     var b = new Date(to.getFullYear(), to.getMonth(), to.getDate());
     return Math.round((b - a) / MS_PER_DAY);
   }
-  // Timestamps in data.js are Eastern wall-clock (naive ISO). Parse the
-  // components directly — never via `new Date` — so the viewer's browser
-  // timezone can't shift them. Always show date + time, labeled ET.
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
   function fmtUpdated(iso) {
@@ -51,7 +43,6 @@
     return 'on-track';
   }
 
-  // Overall health — severity order: blocked > partial-blocked > on-track.
   function teamStatus(team) {
     if (team.paused) return 'paused';
     if (!team.bullets || !team.bullets.length) return 'pending';
@@ -60,7 +51,6 @@
     return 'on-track';
   }
 
-  // Watch items are monitoring notes, separate from overall status.
   function hasWatchItems(team) {
     return (team.bullets || []).some(function (b) { return classifyBullet(b) === 'watch'; });
   }
@@ -113,7 +103,6 @@
     var watchingTeams       = teams.filter(function (t) { return teamStatus(t) !== 'paused' && hasWatchItems(t); });
     var onTrackCount        = teams.length - blockedTeams.length - partialBlockedTeams.length - pendingTeams.length - pausedTeams.length;
 
-    // ── header: full date + countdown chip (always visible while scrolling) ──
     var dateEl = document.getElementById('header-date');
     if (dateEl) dateEl.textContent = fmtFullDate(d);
     var ctdEl = document.getElementById('header-countdown');
@@ -123,7 +112,6 @@
       else              ctdEl.textContent = Math.abs(n) + ' days since ' + DATA.launchLabel;
     }
 
-    // ── banner left: health counts + most-recent update time ─────────────
     var healthRows = '';
     healthRows +=
       '<div class="banner-health-row">' +
@@ -167,15 +155,12 @@
         '</div>';
     }
 
-    // most-recent update across all teams = overall freshness signal.
-    // ISO strings sort lexicographically = chronologically (same format).
     var latestIso = teams.reduce(function (max, t) {
       return (t.updatedAt && t.updatedAt > max) ? t.updatedAt : max;
     }, '');
     var latestStr = latestIso ? fmtUpdated(latestIso) : null;
     var updatedHtml = latestStr ? '<div class="banner-updated">Last updated ' + esc(latestStr) + '</div>' : '';
 
-    // ── callout sections — blocked (serious) → on hold → monitoring (watch) ──
     var rightContent = '';
 
     if (blockedTeams.length) {
@@ -289,8 +274,6 @@
         );
       }
 
-      // Paused teams lead with the pause reason; their bullets stay as the
-      // last-known status. Watch items don't apply while on hold.
       var line = (status === 'paused' && team.pausedReason) ? team.pausedReason : summaryLine(team);
       var items = team.bullets.map(function (b) {
         var c = classifyBullet(b);
@@ -310,12 +293,17 @@
         ? '<span class="team-updated">Updated ' + esc(updatedStr) + '</span>'
         : '';
 
+      var jiraChip = team.jiraUrl
+        ? ' <a href="' + esc(team.jiraUrl) + '" target="_blank" rel="noopener" class="team-jira-chip">' +
+          team.jiraUrl.split('/browse/')[1] + ' ↗</a>'
+        : '';
+
       var detailsClass = 'team ' + status + (status !== 'paused' && hasWatchItems(team) ? ' has-watch' : '');
       return (
         '<details class="' + detailsClass + '">' +
         '<summary>' +
         '<div class="team-summary-body">' +
-        '<span class="team-name">' + esc(team.name) + '</span>' +
+        '<div class="team-name-row"><span class="team-name">' + esc(team.name) + '</span>' + jiraChip + '</div>' +
         '<span class="team-oneliner">' + esc(line) + '</span>' +
         '</div>' +
         '<div class="team-summary-meta">' +
@@ -333,12 +321,7 @@
   function renderDriNotes() {
     var n = DATA.driNotes;
     var el = document.getElementById('dri-notes');
-    var label = document.getElementById('dri-section-label');
-    if (!n) {
-      if (el) el.innerHTML = '';
-      if (label) label.style.display = 'none';
-      return;
-    }
+    if (!n) { if (el) el.innerHTML = ''; return; }
     function group(title, cls, items) {
       var lis = (items || []).map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('');
       return (
@@ -364,7 +347,85 @@
       '</div>';
   }
 
-  // ── roster: icons, avatars, two-row role layout (kickoff surface-card) ─────
+  // ── render Phase 2 scope log ──────────────────────────────────────────────
+  function renderScope() {
+    var log = DATA.phase2Log || [];
+    var el = document.getElementById('scope-content');
+    if (!el) return;
+    if (!log.length) {
+      el.innerHTML = '<p class="empty-state">No Phase 2 scope decisions recorded yet.</p>';
+      return;
+    }
+
+    var deferred = log.filter(function (e) { return e.decision === 'deferred'; });
+    var restored = log.filter(function (e) { return e.decision === 'restored'; });
+    var totalDeferred = deferred.reduce(function (n, e) { return n + (e.features || []).length; }, 0);
+    var totalRestored = restored.reduce(function (n, e) { return n + (e.features || []).length; }, 0);
+
+    var summaryHtml =
+      '<div class="scope-summary">' +
+      '<div class="scope-summary-item deferred">' +
+      '<span class="scope-summary-count">' + totalDeferred + '</span>' +
+      '<span class="scope-summary-label">features deferred to Phase 2</span>' +
+      '</div>' +
+      '<div class="scope-summary-divider"></div>' +
+      '<div class="scope-summary-item restored">' +
+      '<span class="scope-summary-count">' + totalRestored + '</span>' +
+      '<span class="scope-summary-label">items restored to Phase 1</span>' +
+      '</div>' +
+      '<div class="scope-summary-divider"></div>' +
+      '<div class="scope-summary-item neutral">' +
+      '<span class="scope-summary-count">' + log.length + '</span>' +
+      '<span class="scope-summary-label">scope decisions logged</span>' +
+      '</div>' +
+      '</div>';
+
+    var sorted = log.slice().sort(function (a, b) { return b.date.localeCompare(a.date); });
+
+    var entriesHtml = sorted.map(function (entry) {
+      var isRestored = entry.decision === 'restored';
+      var decisionCls = isRestored ? 'restored' : 'deferred';
+      var decisionLabel = isRestored ? 'Restored to Phase 1' : 'Deferred to Phase 2';
+      var prUrl = 'https://github.com/GetDutchie/dutchie-nexus-prototype/pull/' + entry.pr;
+      var dateStr = entry.date ? fmtShort(parseDate(entry.date)) : '';
+      var featuresHtml = (entry.features || []).map(function (f) {
+        return '<li>' + esc(f) + '</li>';
+      }).join('');
+
+      var jiraHtml = entry.jiraUrl
+        ? '<a href="' + esc(entry.jiraUrl) + '" target="_blank" rel="noopener" class="scope-jira-link">' +
+          entry.jiraUrl.split('/browse/')[1] + ' ↗</a>'
+        : '';
+
+      return (
+        '<div class="scope-entry ' + decisionCls + '">' +
+        '<div class="scope-entry-head">' +
+        '<div class="scope-entry-left">' +
+        '<span class="scope-area">' + esc(entry.area) + '</span>' +
+        jiraHtml +
+        '<span class="scope-decision-chip ' + decisionCls + '">' + esc(decisionLabel) + '</span>' +
+        '</div>' +
+        '<div class="scope-entry-meta">' +
+        '<a href="' + esc(prUrl) + '" target="_blank" rel="noopener" class="scope-pr-link">PR #' + entry.pr + '</a>' +
+        '<span class="scope-meta-sep">·</span>' +
+        '<span class="scope-author">' + esc(entry.author) + '</span>' +
+        '<span class="scope-meta-sep">·</span>' +
+        '<span class="scope-date">' + esc(dateStr) + '</span>' +
+        '</div>' +
+        '</div>' +
+        '<ul class="scope-features">' + featuresHtml + '</ul>' +
+        (entry.note ? '<p class="scope-note">' + esc(entry.note) + '</p>' : '') +
+        '</div>'
+      );
+    }).join('');
+
+    el.innerHTML =
+      summaryHtml +
+      '<div class="sec-label" style="margin-top:20px">All scope decisions</div>' +
+      entriesHtml;
+  }
+
+  // ── roster ────────────────────────────────────────────────────────────────
   var AV_COLORS = [
     '#7c3aed', '#db2777', '#0891b2', '#d97706', '#b45309', '#0284c7',
     '#065f46', '#0f766e', '#0369a1', '#15803d', '#6d28d9', '#be185d',
@@ -375,7 +436,6 @@
     for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
     return AV_COLORS[h % AV_COLORS.length];
   }
-  // A role value may list several people, "/"-separated → avatar + name each.
   function renderPeople(value) {
     if (!value) return '';
     return String(value).split('/').map(function (raw) {
@@ -387,7 +447,7 @@
   }
   function roleChip(cls, label, value) {
     var people = renderPeople(value);
-    if (!people) return ''; // skip roles with nobody assigned
+    if (!people) return '';
     return (
       '<span class="role-chip ' + cls + '">' +
       '<span class="role-lbl">' + label + '</span>' +
@@ -423,7 +483,6 @@
       el.innerHTML = '<p class="empty-state">No roster in <code>data.js</code>.</p>';
       return;
     }
-
     var cards = roster.map(function (r) {
       var topChips    = roleChip('r-dri', 'DRI', r.dri) + roleChip('r-pm', 'PM', r.pm);
       var bottomChips = roleChip('r-fe', 'FE', r.fe) + roleChip('r-be', 'BE', r.be) +
@@ -442,7 +501,6 @@
         '</div>'
       );
     }).join('');
-
     el.innerHTML = '<div class="roster-grid">' + cards + '</div>';
   }
 
@@ -468,12 +526,13 @@
     var teams = DATA.teams || [];
     if (!teams.length) {
       document.getElementById('day-lead').innerHTML =
-        '<p class="empty-state">No teams yet — add them to <code>data.js</code>. See README.md.</p>';
+        '<p class="empty-state">No teams yet — add them to <code>data.js</code>.</p>';
     } else {
       renderBanner(teams);
       renderTeams(teams);
     }
     renderDriNotes();
+    renderScope();
     initTabs();
     renderRoster();
   }
