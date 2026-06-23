@@ -23,7 +23,7 @@ window.NEXUS_DATA = {
   launchLabel: '7/20',
 
   // The day this board represents (header date + countdown anchor).
-  date: '2026-06-22',
+  date: '2026-06-23',
 
   // Teams. Order here is the display order. Each carries its own updatedAt.
   teams: [
@@ -65,14 +65,15 @@ window.NEXUS_DATA = {
     },
     {
       name: 'Reporting',
-      updatedAt: '2026-06-22T15:30:00',
+      updatedAt: '2026-06-23T15:55:00',
       bullets: [
-        'Friday demo target: Budtender performance report demoable end-to-end at 1:30 PM ET show-and-tell — serves as the reusable framework; remaining report pages copy the pattern and build in parallel once it lands',
-        'Mack: finalizing refinement doc (architecture lock decisions); targeting first PR for the full Budtender page',
-        'Matt Cossin: moving to PR review and guidance role on this workstream; budtender data layer shipped and live (daily fact table, semantic view by budtender, register wait-time metric)',
-        'Seth Newman: refining the sales overview section; prepping discovery doc so next report starts immediately after Budtender',
-        'Andrew: starting the sales and revenue module',
-        'Marina: daily snapshot prototype PR merged; next up — inventory valuation, morning brief, brand & budtender, scheduled reports',
+        'Budtender performance report end-to-end demo for Friday\'s show-and-tell; serves as the reusable framework — remaining report pages copy the pattern and build in parallel once it lands',
+        'Mack: refinement doc merged with architecture decisions; Budtender performance page spun up, addressing Evan\'s PR feedback (merge soon); next: individual budtender page view',
+        'Seth: PR out shortly for semantic view + data model changes to capture missing budtender metrics; leaflogix controller endpoints started — targeting finish today/tomorrow',
+        'Matt + Stephen: scoping a small report-layer change so reports read metric definitions from the semantic layer (not raw facts and dimensions); Stephen testing against a live report for a quick go/no-go',
+        'Andrew: refinement doc posted for the sales & revenue module; addressing open design decisions before locking the architectural section and chunking out the work',
+        'Marina: design review and updates complete across all reports; assessing morning brief feasibility, then provisioning and config checks',
+        'Watch: report-layer architecture decision pending (Matt + Stephen) — resolving fast to lock consistent patterns before parallelizing',
       ],
     },
     {
