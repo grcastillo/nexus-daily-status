@@ -86,12 +86,13 @@ window.NEXUS_DATA = {
     },
     {
       name: 'Customer Sentiment',
-      updatedAt: '2026-06-22T14:46:00',
+      updatedAt: '2026-06-23T12:20:00',
       bullets: [
-        'Willian: all controllers + repositories in place with mocked data for the full app; all FE connected to controllers. Stretch goal: repos pointing to Snowflake where mock data is',
+        'Willian: all controllers + repositories in place with mocked data for the full app; all FE connected to controllers (Eric approved both PRs). Stretch goal: repos pointing to Snowflake where mock data is',
         'Sarah: survey implemented and posting real data through ecomm → Arma → public API → stored in LLx (accessible via URL; no purchase-flow integration required yet)',
         'Eric: develop configured to pull real Weedmaps data for a couple of customers — full flow pulling down and storing in LLx',
-        'Eric + Matt: fake sample data into GoldDB; Matt: data models into Snowflake importing from GoldDB',
+        'Eric + Matt: GoldDB loaded with a bunch of sample data this morning (process still running — Eric to flag when complete); Matt: data models into Snowflake importing from GoldDB',
+        'Weedmaps partnership: Chris O. has sent a note to the Weedmaps CPO about data access — no response yet',
         'Watch: source type filtering flagged by Eric as a backend impact item — needs investigation',
         'Watch: Sarah hit auth issues testing the PAPI endpoint for survey submissions; Rspec workaround required to run CI on VAPE',
         'Watch: unresolved (16-reply thread) — should the survey display for ecomm dispensaries without a LeafLogix integration, and where does that data get stored?',
