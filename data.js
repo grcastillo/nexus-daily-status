@@ -29,12 +29,15 @@ window.NEXUS_DATA = {
   teams: [
     {
       name: 'Inventory Planning',
-      updatedAt: '2026-06-22T13:40:00',
+      updatedAt: '2026-06-23T15:58:00',
       bullets: [
-        'SKU Table/View, SKU Table UI (with mock API), and back-end contracts / API all progressing this week',
-        'Evan: reusable table UI component complete; working on SKU Table UI. Stephen: PR open for SKU view/table. Matt Cossin: S3→SQL dependency scoped and handed off to Stephen',
-        'Rex and Ned onboarding this week; Rex working with Evan + Stephen on back-end contracts. Roey on vacation; Mike OOO today and rotating off the team',
-        'Blocked: Snowflake → S3 → SQL Server pipeline not yet done — blocking final progress on the data layer. A global concern, not just inventory. Escalated to Eric Livergood, Chris Ostrowski, and Tom Wonneberger',
+        'SKU Table/View, SKU Table UI (with mock API), and back-end contracts all progressing; three milestones on track',
+        'Stephen: PR merged making detail available; next step is S3 export linked to SQL Server',
+        'Evan: WIP prototype of SKU table in progress; building base components for Nexus consistency, continuing to pick away at other prototype components',
+        'Rex: Nexus crash-course complete, constellation set up in VAPE; refining back-end contracts with Stephen and Evan',
+        'Ned onboarding; Roey on vacation; Mike rotating off team',
+        'Watch: New Purchase Order system flagged by Whit Perkins — Nexus operations that add to order will populate POs, and the UI needs to close the loop',
+        'Blocked: Snowflake → S3 → SQL Server pipeline not yet done — blocking final progress on the data layer. A global concern escalated to Eric Livergood, Chris Ostrowski, and Tom Wonneberger',
       ],
     },
     {
