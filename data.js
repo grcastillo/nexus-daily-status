@@ -18,7 +18,7 @@ window.NEXUS_DATA = {
         'Rex: LeafLogix PR #19269 open for SKU table endpoint awaiting review',
         'Ned onboarding; Roey on vacation (returns July 6 — BE refinement starts then); Mike rotated off',
         'Open question: Connect is switching from last-30-days to last-4-weeks (L4W) look-back — how much refactoring does that require on the Nexus side?',
-        'Watch: Evan blocked — Snowflake RSA key not registered in OPIJWHE-DEV; needs Snowflake admin to resolve',
+        'Partial-Blocked: Evan blocked — Snowflake RSA key not registered in OPIJWHE-DEV; needs Snowflake admin to resolve',
         'Watch: data contract in Rex\'s WIP SKU table PR needs team review before merging',
         'Watch: Data DRI ownership has shifted and needs formal clarification',
         'Watch: New Purchase Order system (Whit Perkins) — Nexus ops that populate POs require Inventory UI to close the loop',
