@@ -23,7 +23,6 @@ window.NEXUS_DATA = {
         'Watch: Data DRI ownership has shifted and needs formal clarification',
         'Watch: New Purchase Order system (Whit Perkins) — Nexus ops that populate POs require Inventory UI to close the loop',
         'Mitigation: contracts + expected data state agreed to continue work despite blocker; focused discussion scheduled',
-        'Blocked: Snowflake → S3 → SQL Server pipeline not yet done — blocking final delivery. Cross-team concern escalated to Eric Livergood, Chris Ostrowski, and Tom Wonneberger',
       ],
     },
     {
